@@ -1,13 +1,15 @@
 package com.example.appdevf2.paraderooct17.Entity;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "users")
@@ -38,6 +40,10 @@ public class UserEntity {
     @Column(name = "IsStaff")
     private boolean isStaff;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private ProfileEntity profile;
+ 
     public UserEntity() {
     }
 

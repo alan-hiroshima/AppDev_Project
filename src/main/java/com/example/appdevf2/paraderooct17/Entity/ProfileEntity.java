@@ -1,11 +1,14 @@
 package com.example.appdevf2.paraderooct17.Entity;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "profiles")
@@ -38,6 +41,11 @@ public class ProfileEntity {
     @Column(name = "UpdatedAt")
     private String updatedAt;
 
+     @OneToOne
+     @JoinColumn(name = "user_id", referencedColumnName = "Usersid")
+     @JsonBackReference
+     private UserEntity user;
+  
     public ProfileEntity() {
     }
     
