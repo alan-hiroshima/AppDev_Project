@@ -15,6 +15,10 @@ import jakarta.persistence.CascadeType;
 @Table(name = "users")
 public class UserEntity {
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private TutorProfileEntity tutorProfile;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Usersid;
