@@ -2,6 +2,7 @@ package com.example.appdevf2.paraderooct17.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_subject")
@@ -31,6 +35,11 @@ public class SubjectEntity {
 
     @Column(name = "code")
     private String code;
+
+    //added the reverse mapping here as well
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @JsonManagedReference("subject-bookings")
+    private List<BookingEntity> bookings;
 
     public SubjectEntity() {
     }
@@ -64,6 +73,16 @@ public class SubjectEntity {
     public void setCode(String code) {
         this.code = code;
     }
+    // more reverse mapping
+     public void setTutorProfile(TutorProfileEntity tutorProfile) {
+        this.tutorProfile = tutorProfile;
+    }
 
-    
+    public List<BookingEntity> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingEntity> bookings) {
+        this.bookings = bookings;
+    }
 }

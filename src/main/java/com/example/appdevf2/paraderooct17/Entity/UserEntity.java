@@ -7,9 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -47,6 +49,11 @@ public class UserEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private ProfileEntity profile;
+
+    // created reverse mapping for the Booking - Brent
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference("user-bookings")
+    private List<BookingEntity> bookings;
  
     public UserEntity() {
     }
@@ -111,4 +118,28 @@ public class UserEntity {
         this.isStaff = isStaff;
     }
  
+    // also added these cuz why not
+    public TutorProfileEntity getTutorProfile() {
+        return tutorProfile;
+    }
+
+    public void setTutorProfile(TutorProfileEntity tutorProfile) {
+        this.tutorProfile = tutorProfile;
+    }
+
+    public ProfileEntity getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileEntity profile) {
+        this.profile = profile;
+    }
+
+    public List<BookingEntity> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingEntity> bookings) {
+        this.bookings = bookings;
+    }
 }

@@ -27,7 +27,7 @@ public class TutorProfileEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "tutorProfile", cascade = CascadeType.ALL)
-     @JsonManagedReference
+    @JsonManagedReference
     private List<SubjectEntity> subjects;
 
     @Id
@@ -55,6 +55,16 @@ public class TutorProfileEntity {
 
     @Column(name = "updated_at")
     private String updatedAt;
+
+    //reverse mapping for booking
+    @OneToMany(mappedBy = "tutorProfile", cascade = CascadeType.ALL)
+    @JsonManagedReference("tutor-bookings")
+    private List<BookingEntity> bookings;
+
+    //reverse mapping for review
+    @OneToMany(mappedBy = "tutorProfile", cascade = CascadeType.ALL)
+    @JsonBackReference("tutor-review")
+    private List<ReviewEntity> reviews;
 
     public TutorProfileEntity() {
     }
@@ -135,5 +145,36 @@ public class TutorProfileEntity {
         this.updatedAt = updatedAt;
     }
 
-    
+    //more more reverse mappings
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public List<SubjectEntity> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<SubjectEntity> subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<BookingEntity> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<BookingEntity> bookings) {
+        this.bookings = bookings;
+    }
+
+    public List<ReviewEntity> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ReviewEntity> reviews) {
+        this.reviews = reviews;
+    }
 }
