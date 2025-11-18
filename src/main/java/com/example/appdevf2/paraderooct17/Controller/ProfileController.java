@@ -30,6 +30,17 @@ public class ProfileController {
     public List<ProfileEntity> getAllProfiles() {
         return profileService.getAllProfiles();
     }
+
+
+    @PutMapping
+    public ProfileEntity updateProfile(@PathVariable int id, @RequestBody ProfileEntity profileDetails) {
+        return profileService.updateProfile(id, profileDetails);
+    }
+
+    @DeleteMapping
+    public void deleteProfile(@PathVariable int id) {
+        profileService.deleteProfile(id);
+    }
     
     
     

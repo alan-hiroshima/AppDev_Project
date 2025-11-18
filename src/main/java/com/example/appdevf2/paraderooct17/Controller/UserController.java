@@ -27,5 +27,14 @@ public class UserController {
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
-    
+
+    @PutMapping
+    public UserEntity updateUser(@PathVariable int id, @RequestBody UserEntity userDetails) {
+        return userService.updateUser(id, userDetails);
+    }
+
+    @DeleteMapping
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+    }
 }
