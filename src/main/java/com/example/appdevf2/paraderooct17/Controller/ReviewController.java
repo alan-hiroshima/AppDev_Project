@@ -30,13 +30,8 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ReviewEntity updateReview(@PathVariable int id, @RequestBody ReviewEntity updatedReview) {
-        ReviewEntity existing = reviewService.getReviewById(id);
-        if (existing != null) {
-            updatedReview.setReviewId(id);
-            return reviewService.saveReview(updatedReview);
-        }
-        return null;
+    public ReviewEntity updateReview(@PathVariable int id, @RequestBody ReviewEntity reviewDetails) {
+        return reviewService.updateReview(id, reviewDetails);
     }
 
     @DeleteMapping("/{id}")

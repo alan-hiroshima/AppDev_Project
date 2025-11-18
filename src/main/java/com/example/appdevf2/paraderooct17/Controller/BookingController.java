@@ -30,17 +30,13 @@ public class BookingController {
     }
 
     @PutMapping("/{id}")
-    public BookingEntity updateBooking(@PathVariable int id, @RequestBody BookingEntity updatedBooking) {
-        BookingEntity existing = bookingService.getBookingById(id);
-        if (existing != null) {
-            updatedBooking.setBookingId(id);
-            return bookingService.saveBooking(updatedBooking);
-        }
-        return null;
+    public BookingEntity updateBooking(@PathVariable int id, @RequestBody BookingEntity bookingDetails) {
+        return bookingService.updateBooking(id, bookingDetails);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBooking(@PathVariable int id) {
         bookingService.deleteBooking(id);
     }
+    
 }

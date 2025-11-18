@@ -63,7 +63,7 @@ public class TutorProfileEntity {
 
     //reverse mapping for review
     @OneToMany(mappedBy = "tutorProfile", cascade = CascadeType.ALL)
-    @JsonBackReference("tutor-review")
+    @JsonManagedReference("tutor-review")
     private List<ReviewEntity> reviews;
 
     public TutorProfileEntity() {
