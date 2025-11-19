@@ -115,8 +115,12 @@ public class ProfileEntity {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-   
-
+    public UserEntity getUser() {
+        return user;
+    }
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
 
 }

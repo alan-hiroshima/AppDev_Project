@@ -1,8 +1,10 @@
 package com.example.appdevf2.paraderooct17.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import com.example.appdevf2.paraderooct17.Entity.UserEntity;
 import com.example.appdevf2.paraderooct17.Repository.UserRepository;
+import com.example.appdevf2.paraderooct17.Entity.ProfileEntity;
+import com.example.appdevf2.paraderooct17.Entity.TutorProfileEntity;
 import java.util.List;
 
 @Service
@@ -12,10 +14,13 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-    public UserEntity saveUser(UserEntity user) {
-        return userRepository.save(user);
+    public UserEntity getUserById(int id) {
+        return userRepository.findById(id).orElse(null);
     }
+
+    // public UserEntity saveUser(UserEntity user) {
+    //     return userRepository.save(user);
+    // }
 
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();

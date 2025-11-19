@@ -1,22 +1,33 @@
 package com.example.appdevf2.paraderooct17.Service;
 
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.appdevf2.paraderooct17.Repository.UserRepository;
+import com.example.appdevf2.paraderooct17.Entity.UserEntity;
+import org.springframework.transaction.annotation.Transactional;
 import com.example.appdevf2.paraderooct17.Entity.ProfileEntity;
 import com.example.appdevf2.paraderooct17.Repository.ProfileRepository;
 import java.util.List;
 
+
 @Service
 public class ProfileService {
+    
+    @Autowired
+    private UserRepository userRepository;
     private  ProfileRepository profileRepository;
+    
 
     public ProfileService(ProfileRepository profileRepository) {
         this.profileRepository = profileRepository;
     }
-
-    public ProfileEntity saveProfile(ProfileEntity profile) {
-        return profileRepository.save(profile);
+    public ProfileEntity getProfileById(int id) {
+        return profileRepository.findById(id).orElse(null);
     }
+
+    // public ProfileEntity saveProfile(ProfileEntity profile) {
+    //     return profileRepository.save(profile);
+    // }
 
     public List<ProfileEntity> getAllProfiles() {
         return profileRepository.findAll();
