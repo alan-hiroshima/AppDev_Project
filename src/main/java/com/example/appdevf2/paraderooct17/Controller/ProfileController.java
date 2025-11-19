@@ -26,23 +26,25 @@ public class ProfileController {
         return profileService.saveProfile(profile);
     }
 
+    //Getting all the profile
     @GetMapping
     public List<ProfileEntity> getAllProfiles() {
         return profileService.getAllProfiles();
     }
+    //Getting the profile by id
+    @GetMapping("/{id}")
+    public ProfileEntity getProfileById(@PathVariable int id) {
+        return profileService.getProfileById(id);
+    }
 
-
-    @PutMapping
+    @PutMapping("/{id}")
     public ProfileEntity updateProfile(@PathVariable int id, @RequestBody ProfileEntity profileDetails) {
         return profileService.updateProfile(id, profileDetails);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteProfile(@PathVariable int id) {
         profileService.deleteProfile(id);
     }
-    
-    
-    
-    
+
 }

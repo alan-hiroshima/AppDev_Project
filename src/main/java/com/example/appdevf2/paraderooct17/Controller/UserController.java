@@ -23,18 +23,26 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    //getting all of the user
     @GetMapping
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
+    //getting the user by id
+    @GetMapping("/{id}")
+    public UserEntity getUserById(@PathVariable int id) {
+        return userService.getUserById(id);
+    }
 
-    @PutMapping
+
+    @PutMapping("/{id}")
     public UserEntity updateUser(@PathVariable int id, @RequestBody UserEntity userDetails) {
         return userService.updateUser(id, userDetails);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
+
 }
