@@ -66,6 +66,11 @@ public class TutorProfileEntity {
     @JsonManagedReference("tutor-review")
     private List<ReviewEntity> reviews;
 
+    // === ADDED: Relationship to Availability ===
+    @OneToMany(mappedBy = "tutorProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // This allows the availability to show up in the JSON response
+    private List<AvailabilityEntity> availabilities;
+
     public TutorProfileEntity() {
     }
 
@@ -80,6 +85,16 @@ public class TutorProfileEntity {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    // === ADDED: Getters and Setters for Availability ===
+    public List<AvailabilityEntity> getAvailabilities() {
+        return availabilities;
+    }
+
+    public void setAvailabilities(List<AvailabilityEntity> availabilities) {
+        this.availabilities = availabilities;
+    }
+    // ===================================================
 
     public int getTutorProfileId() {
         return tutorProfileId;
