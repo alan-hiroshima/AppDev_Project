@@ -8,7 +8,6 @@ import com.example.appdevf2.paraderooct17.Service.BookingService;
 
 @RestController
 @RequestMapping("/booking")
-@CrossOrigin(origins = "*")
 public class BookingController {
 
     @Autowired

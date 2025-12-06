@@ -8,7 +8,6 @@ import com.example.appdevf2.paraderooct17.Service.ReviewService;
 
 @RestController
 @RequestMapping("/review")
-@CrossOrigin(origins = "*")
 public class ReviewController {
 
     @Autowired
