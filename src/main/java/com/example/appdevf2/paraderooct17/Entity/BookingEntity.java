@@ -1,5 +1,7 @@
 package com.example.appdevf2.paraderooct17.Entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -31,6 +33,11 @@ public class BookingEntity {
     @OneToOne(mappedBy = "booking", cascade = CascadeType.ALL)
     @JsonManagedReference("booking-review")
     private ReviewEntity review;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    @JsonManagedReference("booking-messages")
+    private List<MessageEntity> messages;
+
 
     @Column(name = "booking_date")
     private String bookingDate;

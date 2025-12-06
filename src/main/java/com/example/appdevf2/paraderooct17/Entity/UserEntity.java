@@ -57,6 +57,10 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference("user-bookings")
     private List<BookingEntity> bookings;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference("user-notifications")
+    private List<NotificationEntity> notifications;
  
     public UserEntity() {
     }
@@ -153,4 +157,13 @@ public class UserEntity {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<NotificationEntity> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<NotificationEntity> notifications) {
+        this.notifications = notifications;
+    }
+
 }

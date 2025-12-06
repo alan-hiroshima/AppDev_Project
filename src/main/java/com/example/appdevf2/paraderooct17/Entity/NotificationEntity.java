@@ -1,9 +1,12 @@
 package com.example.appdevf2.paraderooct17.Entity;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,14 +15,24 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "notifications")
+@Table(name = "tble_notifications")
 public class NotificationEntity {
+    
+    public enum NotificationType {
+        NEW_BOOKING,
+        BOOKING_CANCELLED,
+        PAYOUT_PROCESSED,
+        DISPUTE_RESOLVED,
+        NEW_MESSAGE
+    }  
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int notificationId;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private NotificationType type;
+    
     private String title;
     private String body;
 
@@ -31,13 +44,13 @@ public class NotificationEntity {
 
     // User receiving the notification
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "Usersid")
-    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("user-notifications")
     private UserEntity user;
 
     public NotificationEntity() {}
 
-    public NotificationEntity( String type, String title, String body, String createdAt) {
+    public NotificationEntity( NotificationType type, String title, String body, String createdAt) {
         this.type = type;
         this.title = title;
         this.body = body;
@@ -55,11 +68,11 @@ public class NotificationEntity {
         this.notificationId = notificationId;
     }
 
-    public String getType() {
+    public NotificationType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(NotificationType type) {
         this.type = type;
     }
 
