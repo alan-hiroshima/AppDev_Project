@@ -46,6 +46,9 @@ public class UserEntity {
     @Column(name = "IsStaff")
     private boolean isStaff;
 
+    @Column(name = "Role")
+    private String role; // Values: "STUDENT", "TUTOR", "ADMIN"
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private ProfileEntity profile;
@@ -59,7 +62,7 @@ public class UserEntity {
     }
 
     public UserEntity(String email, String password, String firstName, String lastName, String dateJoined,
-            boolean isActive, boolean isStaff) {
+            boolean isActive, boolean isStaff, String role) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -67,6 +70,7 @@ public class UserEntity {
         this.dateJoined = dateJoined;
         this.isActive = isActive;
         this.isStaff = isStaff;
+        this.role = role;
     }
     
     public int getUsersid() {
@@ -141,5 +145,13 @@ public class UserEntity {
 
     public void setBookings(List<BookingEntity> bookings) {
         this.bookings = bookings;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

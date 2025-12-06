@@ -7,6 +7,7 @@ import com.example.appdevf2.paraderooct17.Repository.UserRepository;
 import com.example.appdevf2.paraderooct17.Entity.ProfileEntity;
 import com.example.appdevf2.paraderooct17.Entity.TutorProfileEntity;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Service
 public class UserService {
@@ -20,16 +21,23 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    // public UserEntity saveUser(UserEntity user) {
-    // return userRepository.save(user);
-    // }
-
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Transactional
     public UserEntity saveUser(UserEntity user) {
+
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
+        
+        if (user.getRole() == null || user.getRole().isEmpty()) {
+            if (user.getIsStaff()) {
+                user.setRole("TUTOR");
+            } else {
+                user.setRole("STUDENT");
+            }
+        }
 
         // If user has a profile, link it back to the user
         if (user.getProfile() != null) {
@@ -60,25 +68,47 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public UserEntity authenticate(String email, String rawPassword) {
+        // Step 1: Find the user by email
+        UserEntity user = userRepository.findByEmail(email);
+
+        // Step 2: Check if user exists AND if password matches
+        if (user != null) {
+            // BCrypt.checkpw(plainText, hashed) returns true if they match
+            if (BCrypt.checkpw(rawPassword, user.getPassword())) {
+                return user; // Login successful
+            }
+        }
+        
+        return null; // Login failed (User not found or Wrong password)
+    }
+
     @Transactional
     public UserEntity updateUser(int id, UserEntity details) {
 
         UserEntity existing = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-        // Update fields
+        // Update basic fields
         existing.setEmail(details.getEmail());
-        existing.setPassword(details.getPassword());
         existing.setFirstName(details.getFirstName());
         existing.setLastName(details.getLastName());
         existing.setDateJoined(details.getDateJoined());
         existing.setIsActive(details.getIsActive());
         existing.setIsStaff(details.getIsStaff());
+        
+        // --- THE FIX: Handle Password Hashing Here ---
+        if (details.getPassword() != null && !details.getPassword().isEmpty()) {
+            // Only hash if the user is actually changing the password
+            String newHashedPass = BCrypt.hashpw(details.getPassword(), BCrypt.gensalt());
+            existing.setPassword(newHashedPass);
+        }
+        // If password is null/empty, we keep the old 'existing.password' (which is already hashed)
 
         // Update Profile if provided
         if (details.getProfile() != null) {
             ProfileEntity newProfile = details.getProfile();
-            newProfile.setUser(existing); // maintain link
+            newProfile.setUser(existing);
             existing.setProfile(newProfile);
         }
 
@@ -89,6 +119,7 @@ public class UserService {
             existing.setTutorProfile(newTutorProfile);
         }
 
+        // Call Repository DIRECTLY, do not go back to saveUser()
         return userRepository.save(existing);
     }
 

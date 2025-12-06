@@ -1,13 +1,11 @@
 package com.example.appdevf2.paraderooct17.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
 import com.example.appdevf2.paraderooct17.Service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import com.example.appdevf2.paraderooct17.Entity.UserEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -35,10 +33,32 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @PostMapping("/login")
+    public UserEntity login(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        // Use the service to check credentials
+        UserEntity user = userService.authenticate(email, password);
+
+        if (user != null) {
+            return user;
+        } else {
+            // Throw an error if login fails (Frontend will receive 500 or 401)
+            throw new RuntimeException("Invalid email or password");
+        }
+    }
 
     @PutMapping("/{id}")
     public UserEntity updateUser(@PathVariable int id, @RequestBody UserEntity userDetails) {
-        return userService.updateUser(id, userDetails);
+        // We delegate ALL logic to the Service. 
+        // The Service will handle finding the ID, hashing passwords, and saving.
+        UserEntity updatedUser = userService.updateUser(id, userDetails);
+        
+        if (updatedUser != null) {
+            return updatedUser;
+        }
+        return null; // Or throw an exception
     }
 
     @DeleteMapping("/{id}")
