@@ -11,8 +11,9 @@
 	<groupId>com.example.appdevf2</groupId>
 	<artifactId>paraderooct17</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>paraderooct17</name>
-	<description>Demo project for Spring Boot</description>
+    <!-- change namae and description -->
+	<name>Acadmeet</name> 
+	<description>Academic student-tutor management application</description>
 	<url/>
 	<licenses>
 		<license/>
