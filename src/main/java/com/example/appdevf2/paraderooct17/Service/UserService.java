@@ -97,22 +97,20 @@ public class UserService {
         existing.setIsActive(details.getIsActive());
         existing.setIsStaff(details.getIsStaff());
         
-        // --- THE FIX: Handle Password Hashing Here ---
+        // Update password if provided
         if (details.getPassword() != null && !details.getPassword().isEmpty()) {
-            // Only hash if the user is actually changing the password
+            // Hash the new password before saving
             String newHashedPass = BCrypt.hashpw(details.getPassword(), BCrypt.gensalt());
             existing.setPassword(newHashedPass);
         }
-        // If password is null/empty, we keep the old 'existing.password' (which is already hashed)
-
-        // Update Profile if provided
+        // Update Profile
         if (details.getProfile() != null) {
             ProfileEntity newProfile = details.getProfile();
             newProfile.setUser(existing);
             existing.setProfile(newProfile);
         }
 
-        // Update TutorProfile if provided
+        // Update TutorProfile
         if (details.getTutorProfile() != null) {
             TutorProfileEntity newTutorProfile = details.getTutorProfile();
             newTutorProfile.setUser(existing);

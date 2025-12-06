@@ -121,7 +121,6 @@ public class UserEntity {
     public void setIsStaff(boolean isStaff) {
         this.isStaff = isStaff;
     }
- 
     // also added these cuz why not
     public TutorProfileEntity getTutorProfile() {
         return tutorProfile;

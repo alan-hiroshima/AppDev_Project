@@ -6,6 +6,5 @@ import com.example.appdevf2.paraderooct17.Entity.AvailabilityEntity;
 
 @Repository
 public interface AvailabilityRepository extends JpaRepository<AvailabilityEntity, Integer> {
-    // You can add queries here later, like:
     // List<AvailabilityEntity> findByDayOfWeek(String dayOfWeek);
 }

@@ -22,14 +22,12 @@ public class TutorProfileService {
         tutorProfile.setCreatedAt(LocalDateTime.now().toString());
         tutorProfile.setUpdatedAt(LocalDateTime.now().toString());
 
-        // === ADDED LOGIC ===
-        // Link the children (Availability) to the parent (TutorProfile)
+        // Link each AvailabilityEntity to this TutorProfileEntity
         if (tutorProfile.getAvailabilities() != null) {
             for (AvailabilityEntity availability : tutorProfile.getAvailabilities()) {
                 availability.setTutorProfile(tutorProfile);
             }
         }
-        // ===================
 
         return tutorProfileRepository.save(tutorProfile);
     }
@@ -54,20 +52,19 @@ public class TutorProfileService {
             existingTutorProfile.setSubjects(tutorProfile.getSubjects());
         }
 
-        // === ADDED LOGIC: Update Availability ===
+        // Update availabilities
         if (tutorProfile.getAvailabilities() != null) {
-            // 1. Clear existing to trigger orphan removal (optional, but good for clean updates)
+            // Clear existing items
             if (existingTutorProfile.getAvailabilities() != null) {
                 existingTutorProfile.getAvailabilities().clear();
             }
             
-            // 2. Add new items and link them
+            // Add updated items
             for (AvailabilityEntity availability : tutorProfile.getAvailabilities()) {
                 availability.setTutorProfile(existingTutorProfile);
                 existingTutorProfile.getAvailabilities().add(availability);
             }
         }
-        // ========================================
 
         return tutorProfileRepository.save(existingTutorProfile);
     }

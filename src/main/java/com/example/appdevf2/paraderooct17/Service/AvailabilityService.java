@@ -26,20 +26,19 @@ public class AvailabilityService {
     public AvailabilityEntity getAvailabilityById(int id) {
         return availabilityRepository.findById(id).orElse(null);
     }
-
+    //comments usefule for fronted to know how to link availability to tutor
     @Transactional
     public AvailabilityEntity saveAvailability(AvailabilityEntity availability) {
-        // 1. Get the Tutor ID from the request
+        // get the Tutor ID from the requested Availability
         int tutorId = availability.getTutorProfile().getTutorProfileId();
 
-        // 2. Fetch the REAL Tutor from the database
+        //get real TutorProfileEntity from the DB
         TutorProfileEntity tutor = tutorProfileRepository.findById(tutorId)
                 .orElseThrow(() -> new RuntimeException("Tutor not found with id: " + tutorId));
 
-        // 3. Link the real tutor to the availability
+        // set the TutorProfileEntity to the Availability
         availability.setTutorProfile(tutor);
 
-        // 4. Save
         return availabilityRepository.save(availability);
     }
 

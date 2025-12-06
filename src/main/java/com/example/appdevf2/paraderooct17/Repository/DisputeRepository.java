@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisputeRepository extends JpaRepository<DisputeEntity, Integer> {
-    // You can add custom finders here later if needed, e.g.:
     // List<DisputeEntity> findByStatus(String status);
 }

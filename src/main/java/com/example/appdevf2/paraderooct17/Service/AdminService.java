@@ -18,14 +18,13 @@ public class AdminService {
     @Autowired private BookingRepository bookingRepository;
     @Autowired private DisputeRepository disputeRepository;
 
-    // --- 1. SYSTEM REPORTS ---
+    //system stats
     public Map<String, Object> getSystemStats() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("totalUsers", userRepository.count());
         stats.put("totalBookings", bookingRepository.count());
         stats.put("totalDisputes", disputeRepository.count());
         
-        // Calculate Active Tutors
         long activeTutors = tutorProfileRepository.findAll().stream()
                 .filter(TutorProfileEntity::getIsActive)
                 .count();
@@ -34,15 +33,14 @@ public class AdminService {
         return stats;
     }
 
-    // --- 2. TUTOR VERIFICATION ---
-    // Get tutors who are NOT active yet (Pending)
+    // tutor management
     public List<TutorProfileEntity> getPendingTutors() {
         return tutorProfileRepository.findAll().stream()
                 .filter(t -> !t.getIsActive())
                 .collect(Collectors.toList());
     }
 
-    // Verify a tutor (Flip isActive to true)
+    // verify tutor
     public TutorProfileEntity verifyTutor(int tutorId) {
         TutorProfileEntity tutor = tutorProfileRepository.findById(tutorId)
                 .orElseThrow(() -> new RuntimeException("Tutor not found"));
@@ -50,8 +48,7 @@ public class AdminService {
         return tutorProfileRepository.save(tutor);
     }
 
-    // --- 3. USER MANAGEMENT ---
-    // Suspend or Reactivate a user
+    // user management
     public UserEntity updateUserStatus(int userId, boolean isActive) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -59,7 +56,7 @@ public class AdminService {
         return userRepository.save(user);
     }
 
-    // --- 4. DISPUTE RESOLUTION ---
+    // dispute management
     public DisputeEntity resolveDispute(int disputeId, String resolutionStatus) {
         DisputeEntity dispute = disputeRepository.findById(disputeId)
                 .orElseThrow(() -> new RuntimeException("Dispute not found"));
@@ -74,7 +71,7 @@ public class AdminService {
         BookingEntity booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
         dispute.setBooking(booking);
-        dispute.setStatus("PENDING"); // Default status
+        dispute.setStatus("PENDING"); 
         return disputeRepository.save(dispute);
     }
     

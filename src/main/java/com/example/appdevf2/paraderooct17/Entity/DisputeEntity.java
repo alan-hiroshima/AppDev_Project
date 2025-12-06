@@ -11,10 +11,9 @@ public class DisputeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int disputeId;
 
-    // Link to the specific booking being disputed
     @ManyToOne
     @JoinColumn(name = "booking_id", nullable = false)
-    @JsonIgnoreProperties({"user", "tutorProfile", "subject", "review"}) // Prevents infinite JSON loops
+    @JsonIgnoreProperties({"user", "tutorProfile", "subject", "review"}) 
     private BookingEntity booking;
 
     @Column(name = "reason")

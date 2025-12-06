@@ -58,7 +58,7 @@ public class UserController {
         if (updatedUser != null) {
             return updatedUser;
         }
-        return null; // Or throw an exception
+        return null; 
     }
 
     @DeleteMapping("/{id}")

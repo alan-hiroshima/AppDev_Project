@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/availability") // This matches the URL in the test data
+@RequestMapping("/availability")
 public class AvailabilityController {
 
     @Autowired
