@@ -1,7 +1,5 @@
 package com.example.appdevf2.paraderooct17.Entity;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -34,13 +32,23 @@ public class BookingEntity {
     @JsonManagedReference("booking-review")
     private ReviewEntity review;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    @JsonManagedReference("booking-messages")
-    private List<MessageEntity> messages;
-
-
     @Column(name = "booking_date")
     private String bookingDate;
+
+    @Column(name = "start_time")
+    private String startTime;
+
+    @Column(name = "end_time")
+    private String endTime;
+
+    @Column(name = "price")
+    private float price;
+
+    @Column(name = "location_type")
+    private String locationType;
+
+    @Column(name = "location_details")
+    private String locationDetails;
 
     @Column(name = "status")
     private String status;
@@ -48,20 +56,17 @@ public class BookingEntity {
     @Column(name = "remarks")
     private String remarks;
 
-    public BookingEntity() {
-    }
+    @Column(name = "created_at")
+    private String createdAt;
 
-    public BookingEntity(int bookingId, String bookingDate, String status, String remarks) {
-        this.bookingId = bookingId;
-        this.bookingDate = bookingDate;
-        this.status = status;
-        this.remarks = remarks;
-    }
+    @Column(name = "updated_at")
+    private String updatedAt;
+
+    public BookingEntity() {}
 
     public int getBookingId() {
         return bookingId;
     }
-
     public void setBookingId(int bookingId) {
         this.bookingId = bookingId;
     }
@@ -69,7 +74,6 @@ public class BookingEntity {
     public UserEntity getUser() {
         return user;
     }
-
     public void setUser(UserEntity user) {
         this.user = user;
     }
@@ -77,7 +81,6 @@ public class BookingEntity {
     public SubjectEntity getSubject() {
         return subject;
     }
-
     public void setSubject(SubjectEntity subject) {
         this.subject = subject;
     }
@@ -85,7 +88,6 @@ public class BookingEntity {
     public TutorProfileEntity getTutorProfile() {
         return tutorProfile;
     }
-
     public void setTutorProfile(TutorProfileEntity tutorProfile) {
         this.tutorProfile = tutorProfile;
     }
@@ -93,7 +95,6 @@ public class BookingEntity {
     public ReviewEntity getReview() {
         return review;
     }
-
     public void setReview(ReviewEntity review) {
         this.review = review;
     }
@@ -101,15 +102,48 @@ public class BookingEntity {
     public String getBookingDate() {
         return bookingDate;
     }
-
     public void setBookingDate(String bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public String getLocationType() {
+        return locationType;
+    }
+    public void setLocationType(String locationType) {
+        this.locationType = locationType;
+    }
+
+    public String getLocationDetails() {
+        return locationDetails;
+    }
+    public void setLocationDetails(String locationDetails) {
+        this.locationDetails = locationDetails;
     }
 
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -117,8 +151,21 @@ public class BookingEntity {
     public String getRemarks() {
         return remarks;
     }
-
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

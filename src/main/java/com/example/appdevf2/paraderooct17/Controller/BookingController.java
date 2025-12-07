@@ -37,5 +37,5 @@ public class BookingController {
     public void deleteBooking(@PathVariable int id) {
         bookingService.deleteBooking(id);
     }
-    
+
 }
